@@ -1,0 +1,116 @@
+{
+  "errorLogs": [
+    {
+      "timestamp": "2025-06-28T10:30:00Z",
+      "severity": "HIGH",
+      "type": "SECURITY_VULNERABILITY",
+      "description": "SQL Injection vulnerability detected",
+      "file": "server.js",
+      "line": 38,
+      "details": "User input directly concatenated into SQL query without parameterization",
+      "code_snippet": "const query = `SELECT * FROM users WHERE username = '${username}'`;",
+      "recommendation": "Use parameterized queries to prevent SQL injection"
+    },
+    {
+      "timestamp": "2025-06-28T10:31:00Z",
+      "severity": "HIGH", 
+      "type": "SECURITY_VULNERABILITY",
+      "description": "Hardcoded JWT secret",
+      "file": "server.js",
+      "line": 31,
+      "details": "JWT secret is hardcoded instead of using environment variables",
+      "code_snippet": "jwt.verify(token, 'supersecretkey', (err, user) => {",
+      "recommendation": "Move JWT secret to environment variables"
+    },
+    {
+      "timestamp": "2025-06-28T10:32:00Z",
+      "severity": "MEDIUM",
+      "type": "MISSING_ERROR_HANDLING",
+      "description": "Database connection without error handling",
+      "file": "server.js", 
+      "line": 17,
+      "details": "Database connection established without proper error handling",
+      "code_snippet": "db.connect();",
+      "recommendation": "Add error handling for database connection"
+    },
+    {
+      "timestamp": "2025-06-28T10:33:00Z",
+      "severity": "HIGH",
+      "type": "SECURITY_VULNERABILITY", 
+      "description": "Missing input validation",
+      "file": "server.js",
+      "line": 37,
+      "details": "No validation on user input before processing",
+      "code_snippet": "const { username, password } = req.body;",
+      "recommendation": "Add input validation and sanitization"
+    },
+    {
+      "timestamp": "2025-06-28T10:34:00Z",
+      "severity": "HIGH",
+      "type": "DATA_EXPOSURE",
+      "description": "Sensitive endpoint without authentication",
+      "file": "server.js",
+      "line": 67,
+      "details": "Users endpoint exposes all user data without authentication",
+      "code_snippet": "app.get('/api/users', (req, res) => {",
+      "recommendation": "Add authentication middleware to protect sensitive endpoints"
+    },
+    {
+      "timestamp": "2025-06-28T10:35:00Z",
+      "severity": "CRITICAL",
+      "type": "DATA_EXPOSURE",
+      "description": "Password hashes exposed in API response",
+      "file": "server.js",
+      "line": 69,
+      "details": "API returns user passwords including hashed passwords",
+      "code_snippet": "db.query('SELECT * FROM users', (err, results) => {",
+      "recommendation": "Exclude sensitive fields from API responses"
+    },
+    {
+      "timestamp": "2025-06-28T10:36:00Z",
+      "severity": "MEDIUM",
+      "type": "SECURITY_VULNERABILITY",
+      "description": "JWT token stored in localStorage",
+      "file": "public/index.html",
+      "line": 153,
+      "details": "JWT token stored in localStorage is vulnerable to XSS attacks",
+      "code_snippet": "localStorage.setItem('token', data.token);",
+      "recommendation": "Use httpOnly cookies for token storage"
+    },
+    {
+      "timestamp": "2025-06-28T10:37:00Z",
+      "severity": "HIGH",
+      "type": "SECURITY_VULNERABILITY",
+      "description": "Missing authorization check",
+      "file": "server.js",
+      "line": 116,
+      "details": "Users can delete any user account without authorization",
+      "code_snippet": "app.delete('/api/users/:id', authenticateToken, (req, res) => {",
+      "recommendation": "Add authorization to ensure users can only modify their own data"
+    }
+  ],
+  "summary": {
+    "total_errors": 60,
+    "critical": 8,
+    "high": 25,
+    "medium": 20,
+    "low": 7,
+    "files_affected": [
+      "server.js",
+      "public/index.html", 
+      "database/setup.sql",
+      ".env",
+      "tests/auth.test.js"
+    ],
+    "categories": [
+      "SQL Injection",
+      "Authentication/Authorization",
+      "Input Validation",
+      "Error Handling", 
+      "Data Exposure",
+      "Hardcoded Secrets",
+      "Test Coverage",
+      "Security Headers"
+    ]
+  }
+}
