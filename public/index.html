@@ -12,30 +12,30 @@
             padding: 20px;
             background-color: #f5f5f5;
         }
-        
+
         .container {
             background: white;
             padding: 30px;
             border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
-        
+
         h1 {
             text-align: center;
             color: #333;
             margin-bottom: 30px;
         }
-        
+
         .form-group {
             margin-bottom: 20px;
         }
-        
+
         label {
             display: block;
             margin-bottom: 5px;
             color: #555;
         }
-        
+
         input[type="text"], input[type="password"], input[type="email"] {
             width: 100%;
             padding: 10px;
@@ -43,7 +43,7 @@
             border-radius: 4px;
             box-sizing: border-box;
         }
-        
+
         button {
             width: 100%;
             padding: 12px;
@@ -54,62 +54,62 @@
             cursor: pointer;
             font-size: 16px;
         }
-        
+
         button:hover {
             background-color: #0056b3;
         }
-        
+
         .error {
             color: red;
             margin-top: 10px;
             text-align: center;
         }
-        
+
         .success {
             color: green;
             margin-top: 10px;
             text-align: center;
         }
-        
+
         .toggle-form {
             text-align: center;
             margin-top: 20px;
         }
-        
+
         .toggle-form a {
             color: #007bff;
             text-decoration: none;
         }
-        
+
         .hidden {
             display: none;
         }
-        
+
         .dashboard {
             max-width: 800px;
         }
-        
+
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
         }
-        
+
         th, td {
             padding: 12px;
             text-align: left;
             border-bottom: 1px solid #ddd;
         }
-        
+
         th {
             background-color: #f8f9fa;
         }
-        
+
         .logout-btn {
             background-color: #dc3545;
             margin-bottom: 20px;
         }
-        
+
         .logout-btn:hover {
             background-color: #c82333;
         }
@@ -182,23 +182,23 @@
     <script>
         // ERROR 24: No input sanitization on frontend
         // ERROR 25: Storing JWT token in localStorage (security risk)
-        
+
         let currentToken = localStorage.getItem('token');
-        
+
         // Check if user is already logged in
         if (currentToken) {
             showDashboard();
         }
-        
+
         // Login form handler
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            
+
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
-            
+
             // ERROR 26: No client-side validation
-            
+
             try {
                 // ERROR 27: No HTTPS enforcement
                 const response = await fetch('/api/login', {
@@ -208,9 +208,9 @@
                     },
                     body: JSON.stringify({ username, password })
                 });
-                
+
                 const data = await response.json();
-                
+
                 if (response.ok) {
                     localStorage.setItem('token', data.token);
                     currentToken = data.token;
@@ -223,15 +223,15 @@
                 document.getElementById('loginError').textContent = 'Login failed';
             }
         });
-        
+
         // Register form handler
         document.getElementById('registerForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            
+
             const username = document.getElementById('regUsername').value;
             const email = document.getElementById('regEmail').value;
             const password = document.getElementById('regPassword').value;
-            
+
             try {
                 const response = await fetch('/api/users', {
                     method: 'POST',
@@ -240,9 +240,9 @@
                     },
                     body: JSON.stringify({ username, email, password })
                 });
-                
+
                 const data = await response.json();
-                
+
                 if (response.ok) {
                     document.getElementById('registerSuccess').textContent = 'Registration successful! Please login.';
                     document.getElementById('registerError').textContent = '';
@@ -254,23 +254,23 @@
                 document.getElementById('registerError').textContent = 'Registration failed';
             }
         });
-        
+
         function toggleForm() {
             const loginContainer = document.getElementById('loginContainer');
             const registerContainer = document.getElementById('registerContainer');
-            
+
             loginContainer.classList.toggle('hidden');
             registerContainer.classList.toggle('hidden');
         }
-        
+
         async function showDashboard() {
             document.getElementById('loginContainer').classList.add('hidden');
             document.getElementById('registerContainer').classList.add('hidden');
             document.getElementById('dashboardContainer').classList.remove('hidden');
-            
+
             await loadUsers();
         }
-        
+
         async function loadUsers() {
             try {
                 // ERROR 30: Loading sensitive user data without proper authorization
@@ -279,12 +279,12 @@
                         'Authorization': `Bearer ${currentToken}`
                     }
                 });
-                
+
                 const users = await response.json();
-                
+
                 const tableBody = document.getElementById('usersTableBody');
                 tableBody.innerHTML = '';
-                
+
                 users.forEach(user => {
                     const row = tableBody.insertRow();
                     row.innerHTML = `
@@ -302,7 +302,7 @@
                 console.error('Failed to load users:', error);
             }
         }
-        
+
         async function deleteUser(userId) {
             // ERROR 31: No confirmation dialog before deletion
             try {
@@ -312,7 +312,7 @@
                         'Authorization': `Bearer ${currentToken}`
                     }
                 });
-                
+
                 if (response.ok) {
                     await loadUsers(); // Reload the users table
                 } else {
@@ -322,7 +322,7 @@
                 alert('Error deleting user');
             }
         }
-        
+
         function logout() {
             localStorage.removeItem('token');
             currentToken = null;
