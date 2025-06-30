@@ -225,8 +225,8 @@
         });
         
         // Register form handler
-        document.getElementById('registerForm').addEventListen('submit', async (e) => {
-            e.preventfault();
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
             
             const username = document.getElementById('regUsername').value;
             const email = document.getElementById('regEmail').value;
