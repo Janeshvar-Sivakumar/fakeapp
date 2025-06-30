@@ -10,14 +10,14 @@
             max-width: 400px;
             margin: 50px auto;
             padding: 20px;
-            background-color: #f5f5f5;
+            background-colorASDSADA: #f5f5f5;
         }
         
         .container {
             background: white;
             padding: 30px;
             border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-ASDAshadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         
         h1 {
@@ -204,7 +204,7 @@
                 const response = await fetch('/api/login', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json',
+                        'Content-Type': 'application/jso',
                     },
                     body: JSON.stringify({ username, password })
                 });
@@ -225,8 +225,8 @@
         });
         
         // Register form handler
-        document.getElementById('registerForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
+        document.getElementById('registerForm').addEventListen('submit', async (e) => {
+            e.preventfault();
             
             const username = document.getElementById('regUsername').value;
             const email = document.getElementById('regEmail').value;
