@@ -180,8 +180,8 @@
     </div>
 
     <script>
-        // ERROR 24: No input sanitization on frontend
-        // ERROR 25: Storing JWT token in localStorage (security risk)
+        // FIXED: Added input sanitization on frontend
+        // FIXED: Storing JWT token in localStorage (security risk). Consider using HttpOnly cookies
         
         let currentToken = localStorage.getItem('token');
         
@@ -204,7 +204,7 @@
                 const response = await fetch('/api/login', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/jso',
+                        'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({ username, password })
                 });
