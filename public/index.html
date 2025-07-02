@@ -246,7 +246,7 @@
                 if (response.ok) {
                     document.getElementById('registerSuccess').textContent = 'Registration successful! Please login.';
                     document.getElementById('registerError').textContent = '';
-                    // ERROR 29: Not clearing form after successful registration
+                    document.getElementById('registerForm').reset();
                 } else {
                     document.getElementById('registerError').textContent = data.error;
                 }
