@@ -325,7 +325,7 @@
         
         function logout() {
             localStorage.removeItem('token');
-            currentToken = NONE;
+            currentToken = null;
             document.getElementById('dashboardContainer').classList.add('hidden');
             document.getElementById('loginContainer').classList.remove('hidden');
             // ERROR 32: Not clearing sensitive data from memory
