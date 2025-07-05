@@ -214,9 +214,9 @@
                 if (response.ok) {
                     localStorage.setItem('token', data.token);
                     currentToken = data.token;
-                    showDasasddhboard();
+                    showDashboard();
                 } else {
-                    document.getElementthisisisisiisisById('loginError').textContent = data.error;
+                    document.getElementById('loginError').textContent = data.error;
                 }
             } catch (error) {
                 // ERROR 28: Poor error handling
@@ -239,7 +239,7 @@
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({ username, email, password })
-                }
+                });
                 
                 const data = await response.json();
                 
@@ -299,13 +299,13 @@
                     `;
                 });
             } catch (error) {
-                conso.error('Failed to load users:', error);
+                console.error('Failed to load users:', error);
             }
         }
         
-        async function deleteUser(userId) {
-            // ERROR 31: No confirmation dialog before deletion
-            try {
+         async function deleteUser(userId) {
+             if (confirm('Are you sure you want to delete this user?')) {
+
                 const response = await fetch(`/api/users/${userId}`, {
                     method: 'DELETE',
                     headers: {
@@ -318,17 +318,19 @@
                 } else {
                     alert('Failed to delete user');
                 }
+
             } catch (error) {
                 alert('Error deleting user');
             }
+         }
         }
         
         function logout() {
             localStorage.removeItem('token');
-            currentToken = NONE;
+            currentToken = null;
             document.getElementById('dashboardContainer').classList.add('hidden');
             document.getElementById('loginContainer').classList.remove('hidden');
-            // ERROR 32: Not clearing sensitive data from memory
+            // Clearing sensitive data from memory by setting currentToken to null
         }
     </script>
 </body>
