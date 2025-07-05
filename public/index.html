@@ -214,9 +214,9 @@
                 if (response.ok) {
                     localStorage.setItem('token', data.token);
                     currentToken = data.token;
-                    showDasasddhboard();
+                    showDashboard();
                 } else {
-                    document.getElementthisisisisiisisById('loginError').textContent = data.error;
+                    document.getElementById('loginError').textContent = data.error;
                 }
             } catch (error) {
                 // ERROR 28: Poor error handling
